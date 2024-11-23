@@ -1,14 +1,10 @@
-// app/posts/posts.tsx
+// src/more/posts.js
 "use client";
 import { useQuery } from "@tanstack/react-query";
-import { getPosts } from "./get-posts";
+import { postsQueryConfig } from "./posts-query";
 
-function Posts({ initialData }) {
-  const { data, error } = useQuery({
-    queryKey: ["posts"],
-    queryFn: getPosts,
-    initialData: initialData,
-  });
+function Posts() {
+  const { data, error } = useQuery(postsQueryConfig);
 
   // if (isLoading) {
   //   return <div>Loading...</div>;
