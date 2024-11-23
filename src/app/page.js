@@ -1,11 +1,28 @@
-export default async function Page() {
-  let data = await fetch("https://api.vercel.app/blog");
-  let posts = await data.json();
+// app/posts/page.tsx
+
+import { getPosts } from "@/more/get-posts";
+import Posts from "@/more/posts";
+
+export const dynamic = "force-static"; // Enforces SSG instead of SSR
+
+export default async function PostsPage() {
+  // const queryClient = new QueryClient();
+
+  // await queryClient.prefetchQuery({
+  //   queryKey: ["posts"],
+  //   queryFn: getPosts,
+  // });
+
+  const data = await getPosts();
+
   return (
-    <ul>
-      {posts.map((post) => (
-        <li key={post.id}>{post.title}</li>
-      ))}
-    </ul>
+    // Neat! Serialization is now as easy as passing props.
+    // HydrationBoundary is a Client Component, so hydration will happen there.
+    // <HydrationBoundary state={dehydrate(queryClient)}>
+    <div>
+      <h1>PostsPage</h1>
+      <Posts initialData={data} />
+    </div>
+    // </HydrationBoundary>
   );
 }
